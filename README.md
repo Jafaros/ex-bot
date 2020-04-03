@@ -1,0 +1,2 @@
+# ex-bot
+Discord Bot
