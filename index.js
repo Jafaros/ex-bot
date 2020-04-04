@@ -29,7 +29,7 @@ bot.on('message', message => {
 		seek: 0,
 		volume: 1
 	}
-	if(message.content.toLowerCase().startsWith("-radio")){
+	if(message.content.toLowerCase() === "-radio"){
 		let url_fm = "http://ice.actve.net/fm-evropa2-128";
 			if (message.member.voice.channel) {
 				const connection = message.member.voice.channel.join()
