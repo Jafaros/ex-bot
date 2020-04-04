@@ -125,9 +125,9 @@ bot.on('message', message => {
 				.setImage('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
 				.setTimestamp()
 				.setFooter('By Jafaros 02.04.2020');
-
-			message.channel.send(zprava);
+			
 			message.channel.send(zpravy_tenjont[Math.floor(Math.random() * zpravy_tenjont.length)]);
+			message.channel.send(zprava);
 	}
 });
 
