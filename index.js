@@ -19,36 +19,8 @@ bot.on('ready', () =>{
 	bot.user.setStatus("Online");
 	
 	bot.user.setActivity("Server",{type: "WATCHING"});
-})
-
-//restart bota
-bot.on("message", message =>{
-	if(message.content === "-restart"){
-		if(message.author.id === "507580014359871489"){
-			let restart = message.content.toLowerCase();
-			
-			try{
-				bot.commands.delete(restart);
-				bot.commands.set(restart, pull);
-			}
-			catch(e){
-				
-			}
-			message.channel.send("Bot se restartoval!");
-		}
-	}
 });
 
-//vypnutí bota
-bot.on("message", message =>{
-	if(message.content === "-off"){
-		if(message.author.id === "507580014359871489"){
-			message.channel.send("Vypínání...");
-			bot.user.setStatus("Offline");
-			process.exit()
-		}
-	}
-});
 
 //radio
 bot.on('message', message => {
@@ -148,14 +120,14 @@ bot.on('message', message => {
 			const zprava = new Discord.MessageEmbed()
 				.setColor('#3cb5e8')
 				.setTitle(message.content)
-				.setDescription('Some description here')
-				.addField("Hláška", zpravy_tenjont[Math.floor(Math.random() * zpravy_tenjont.length)], true)
+				.setDescription('Prostě joint')
 				.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
 				.setImage('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
 				.setTimestamp()
 				.setFooter('By Jafaros 02.04.2020');
 
 			message.channel.send(zprava);
+			message.channel.send(zpravy_tenjont[Math.floor(Math.random() * zpravy_tenjont.length)]);
 	}
 });
 
