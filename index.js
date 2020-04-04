@@ -88,7 +88,7 @@ bot.on('message', message => {
 		seek: 0,
 		volume: 1
 	}
-	if(message.content.toLowerCase().startsWith("-play")){
+	if(message.content.toLowerCase() === "-play" || "-šuldohraj" || "-zmrde"){
 		let args = message.content.split(" ");
 		let url = args[1];
 			if (message.member.voice.channel) {
