@@ -9,7 +9,7 @@ const command = new Discord.MessageEmbed();
 //hlášky ke commandům
 let radio = "Zapínám rádio...";
 let stop = "Tato funkce prozatím není přidána";
-let help = "\n-radio - Zapne rádio\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro Adminy)";
+let help = "\n-radio - Zapne rádio Evropy 2\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro Adminy)";
 let url_validate = "Chybí URL adresa nebo je chybná!";
 
 //stav bota při zapnutí
