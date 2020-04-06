@@ -21,6 +21,15 @@ bot.on('ready', () =>{
 	bot.user.setActivity("Server",{type: "WATCHING"});
 });
 
+//ping pong
+bot.on('message', message => {
+  if (message.content === '-ping') {
+    message.channel.send('pong');
+  }
+});
+
+client.login('your token here');
+
 
 //radio
 bot.on('message', message => {
