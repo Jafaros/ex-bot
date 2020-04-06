@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const token = 'Njk0ODQyMDc5OTAxMzg0NzM1.Xoc4DA.kkBSJXCFuYWWDsijaWsJmm5VBUA';
+const token = 'Njk0ODQyMDc5OTAxMzg0NzM1.XouXVA.YIimsgsJ39FXKDfa0mx0j7g_zHI';
 bot.login(token);
 
 const command = new Discord.MessageEmbed();
@@ -25,6 +25,15 @@ bot.on('ready', () =>{
 bot.on('message', message => {
   if (message.content === '-ping') {
     message.channel.send('pong');
+  }
+});
+
+//hlasování
+bot.on('message', message => {
+  if (message.channel.id === "696813777013833729") {
+	  let poolEmbed = new Discord.MessageEmbed()
+	  .setTitle("Hlasování")
+	  .setDescription("")
   }
 });
 
@@ -148,7 +157,7 @@ bot.on('message', message => {
 
 //hlášky
 bot.on('message', message => {
-	if(message.content === "TenJont"){
+	if(message.content === "~TenJont"){
 			let zpravy_tenjont = ["Jé hele to je Ten Joint!", "Už ho furt nezmiňuj, chudáka, otravuješ ho furt oznámením...", "Ha, TenJont!", "Zdar Piškot!"];
 			const zprava = new Discord.MessageEmbed()
 				.setColor('#3cb5e8')
@@ -173,11 +182,11 @@ bot.on('message', message =>{
 	let count = cont.slice(1);
 	
 	if(msg.startsWith(prefix)){
-		if(message.member.roles.cache.some(r => r.name === "Admin")){
+		if(message.member.roles.cache.some(r => r.name === "👑ADMIN") || message.member.roles.cache.some(m => m.name === "🔊MODERÁTOR")){
 		async function purge(){
 			message.delete();
 			
-			if(!message.member.roles.cache.some(r => r.name === "Admin")){
+			if(!message.member.roles.cache.some(r => r.name === "👑ADMIN") || !message.member.roles.cache.some(r => r.name === "🔊MODERÁTOR")){
 				message.channel.send("Nemáš dostatečná oprávnění pro použití tohoto příkazu");
 			}
 		
