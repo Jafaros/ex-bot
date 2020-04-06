@@ -28,8 +28,6 @@ bot.on('message', message => {
   }
 });
 
-client.login('your token here');
-
 
 //radio
 bot.on('message', message => {
