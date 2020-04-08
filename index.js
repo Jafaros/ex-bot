@@ -223,4 +223,4 @@ bot.on('message', message =>{
 			message.channel.send("Nemáš dostatečná oprávnění pro použití tohoto příkazu");
 		}
 	}
-})
+});
