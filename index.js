@@ -29,12 +29,32 @@ bot.on('message', message => {
 });
 
 //hlasování
-bot.on('message', message => {
-  if (message.channel.id === "696813777013833729") {
-	  let poolEmbed = new Discord.MessageEmbed()
-	  .setTitle("Hlasování")
-	  .setDescription("")
-  }
+bot.on('message', async message => {
+	if(message.content.toLowerCase().startsWith("-vote")){
+		let argy = message.content.split("-vote");
+		
+		if (message.channel.id === "696813777013833729") {
+			let poolEmbed = new Discord.MessageEmbed()
+			.setTitle("Hlasování")
+			.setDescription(argy.join(" "))
+			let poolMessage = await message.channel.send(poolEmbed);
+	  
+			await poolMessage.react("✔️");
+			await poolMessage.react("❌");
+			
+			message.delete({timeout: 1000});
+	  
+			const reactions = await message.awaitReactions(reaction =>  reaction.emoji.name === "✔" || reaction.emoji.name === "❌", {time: 10000});
+
+			let resultsEmdeb = new Discord.MessageEmbed()
+				.setTitle("Výsledky hlasování")
+				.addField("✔️: ", `${reactions.get("✔️").count-1} hlasů`)	
+				.addField("❌: ", `${reactions.get("❌").count-1} hlasů`)
+
+		message.channel.send(resultsEmbed);
+		poolMessage.delete(0);
+		}
+	}
 });
 
 
