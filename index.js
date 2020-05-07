@@ -227,6 +227,7 @@ bot.on('message', message => {
 	}
 });
 
+
 //hlášky
 bot.on('message', message => {
 	if(message.content === "~TenJont"){
