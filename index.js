@@ -201,6 +201,32 @@ bot.on('message', message => {
 	}
 });
 
+//jesus do pici
+bot.on('message', message => {
+	const ytdl = require("ytdl-core");
+	const streamOptions = {
+		seek: 0,
+		volume: 1
+	}
+	if(message.content.toLowerCase().startsWith("-BAF")){
+		let baf_url = "https://www.youtube.com/watch?v=UaDcrfoOWpA";
+			if (message.member.voice.channel) {
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+						const stream = ytdl(baf_url, {filter: 'audioonly'});
+						const dispatcher = connection.play(stream, streamOptions) 
+						.on("end",()=>{
+							console.log("Písnička skončila"),
+							voice.channel.leave()
+						});
+					})
+				} 
+			else {
+				message.channel.send('Musíš být ve voicechatu!');
+		}
+	}
+});
+
 //hlášky
 bot.on('message', message => {
 	if(message.content === "~TenJont"){
