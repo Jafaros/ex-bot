@@ -175,6 +175,32 @@ bot.on('message', message => {
 	}
 });
 
+//babky na faře
+bot.on('message', message => {
+	const ytdl = require("ytdl-core");
+	const streamOptions = {
+		seek: 0,
+		volume: 1
+	}
+	if(message.content.toLowerCase().startsWith("-fara")){
+		let fara_url = "https://www.youtube.com/watch?v=-ry2SbWk3l0";
+			if (message.member.voice.channel) {
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+						const stream = ytdl(fara_url, {filter: 'audioonly'});
+						const dispatcher = connection.play(stream, streamOptions) 
+						.on("end",()=>{
+							console.log("Písnička skončila"),
+							voice.channel.leave()
+						});
+					})
+				} 
+			else {
+				message.channel.send('Musíš být ve voicechatu!');
+		}
+	}
+});
+
 //hlášky
 bot.on('message', message => {
 	if(message.content === "~TenJont"){
