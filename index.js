@@ -208,7 +208,7 @@ bot.on('message', message => {
 		seek: 0,
 		volume: 1
 	}
-	if(message.content.toLowerCase().startsWith("-BAF")){
+	if(message.content.toLowerCase().startsWith("-baf")){
 		let baf_url = "https://www.youtube.com/watch?v=UaDcrfoOWpA";
 			if (message.member.voice.channel) {
 					const connection = message.member.voice.channel.join()
