@@ -255,11 +255,11 @@ bot.on('message', message =>{
 	let count = cont.slice(1);
 	
 	if(msg.startsWith(prefix)){
-		if(message.member.roles.cache.some(r => r.name === "👑ADMIN") || message.member.roles.cache.some(m => m.name === "🔊MODERÁTOR")){
+		if(message.member.roles.cache.some(r => r.name === "ADMIN") || message.member.roles.cache.some(m => m.name === "MODERÁTOR")){
 		async function purge(){
 			message.delete();
 			
-			if(!message.member.roles.cache.some(r => r.name === "👑ADMIN" || r.name === "🔊MODERÁTOR")){
+			if(!message.member.roles.cache.some(r => r.name === "ADMIN" || r.name === "MODERÁTOR")){
 				message.channel.send("Nemáš dostatečná oprávnění pro použití tohoto příkazu");
 			}
 		
