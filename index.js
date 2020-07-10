@@ -297,7 +297,7 @@ bot.on('message', message => {
 			const mc_house = new Discord.MessageEmbed()
 				.setColor('#086922')
 				.setTitle('Souřadnice domů')
-				.setDescription('Implumes [-2180 72 54]\nVojta [-1825 69 511]')
+				.setDescription('Implumes [-2180 72 54]\nVojta [-1825 69 511]\nJafaros [-320 79 -110]')
 				.setFooter('By Jafaros 10.07.2020');
 			
 			message.channel.send(mc_house);
