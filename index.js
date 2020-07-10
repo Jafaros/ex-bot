@@ -277,3 +277,17 @@ bot.on('message', message =>{
 		}
 	}
 });
+//Minecraft server commandy
+bot.on('message', message => {
+	if(message.content === "-mc_spawn"){
+			let mc_spawn = ["-9 72 27"];
+			const zprava = new Discord.MessageEmbed()
+				.setColor('#3cb5e8')
+				.setTitle(message.content)
+				.setDescription('Spawnpoint serveru Majnr 2.0')
+				.setFooter('By Jafaros 10.07.2020');
+			
+			message.channel.send(mc_spawn);
+			message.channel.send(zprava);
+	}
+});
