@@ -183,7 +183,7 @@ bot.on('message', message => {
 		volume: 1
 	}
 	if(message.content.toLowerCase().startsWith("-fara")){
-		let fara_url = "https://www.youtube.com/watch?v=-ry2SbWk3l0";
+		let fara_url = "https://youtu.be/LXbt1aWpTaA";
 			if (message.member.voice.channel) {
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
