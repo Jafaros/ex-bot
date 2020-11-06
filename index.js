@@ -277,29 +277,3 @@ bot.on('message', message =>{
 		}
 	}
 });
-
-//Minecraft server Majnr 2.0 spawn
-bot.on('message', message => {
-	if(message.content === "-mc_spawn"){
-			const mc_spawn = new Discord.MessageEmbed()
-				.setColor('#086922')
-				.setTitle('Spawnpoint')
-				.setDescription('Spawnpoint serveru Majnr 2.0 [-9 72 27]')
-				.setFooter('By Jafaros 10.07.2020');
-			
-			message.channel.send(mc_spawn);
-	}
-});
-
-//Minecraft server Majnr 2.0 domy
-bot.on('message', message => {
-	if(message.content === "-mc_house"){
-			const mc_house = new Discord.MessageEmbed()
-				.setColor('#086922')
-				.setTitle('Souřadnice domů')
-				.setDescription('Implumes [-2180 72 54]\nVojta [-1825 69 511]\nJafaros [-320 79 -110]')
-				.setFooter('By Jafaros 10.07.2020');
-			
-			message.channel.send(mc_house);
-	}
-});
