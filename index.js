@@ -157,7 +157,7 @@ bot.on('message', message => {
 		volume: 1
 	}
 	if(message.content.toLowerCase().startsWith("-adolfeen")){
-		let adolfeen_url = "https://www.youtube.com/watch?v=OuMbeT12Ccc";
+		let adolfeen_url = "https://youtu.be/OuMbeT12Ccc";
 			if (message.member.voice.channel) {
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
