@@ -138,7 +138,7 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave()
+							voice.channel.leave();
 						});
 					})
 				}
@@ -165,7 +165,7 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave()
+							voice.channel.leave();
 						});
 					})
 				} 
