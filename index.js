@@ -61,9 +61,10 @@ bot.on('message', async message => {
 //radio
 bot.on('message', message => {
 	const radio_fm = require("ytdl-core");
+	let volume = 100;
 	const streamOptions = {
 		seek: 0,
-		volume: 1
+		volume: volume
 	}
 	if(message.content.toLowerCase() === "-radio"){
 		let url_fm = "http://ice.actve.net/fm-evropa2-128";
@@ -72,19 +73,22 @@ bot.on('message', message => {
 				.then(connection => {
 				const dispatcher = connection.play(url_fm, streamOptions);
 				message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
-				message.channel.send(command.setColor('#4287f5').setTitle(radio).setDescription("Vyžádal: " + message.author.username));
+				message.channel.send(command.setColor('#4287f5').setTitle(radio).addFields(
+					{ name: '**Vyžádal**', value: message.author.username },
+					{ name: '**Hlasitost**', value: volume + "%" },
+				));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
 		}
 }});
 
 
 bot.on('message', msg => {
 	if(msg.content === "-help"){
-		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help));
+		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help).addFields());
 	}
 });
 
@@ -97,7 +101,7 @@ bot.on('message', async message => {
     if (message.member.voice.channel) {
       const connection = await message.member.voice.channel.join();
     } else {
-      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
     }
   }
 });
@@ -113,7 +117,7 @@ bot.on('message', async message => {
 	  bot.user.setActivity("Server", {type: "WATCHING"});
     } 
 	else {
-      message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+      message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
     }
   }
 });
@@ -121,9 +125,10 @@ bot.on('message', async message => {
 //play music
 bot.on('message', message => {
 	const ytdl = require("ytdl-core");
+	let volume = 100;
 	const streamOptions = {
 		seek: 0,
-		volume: 1
+		volume: volume
 	}
 	if(message.content.toLowerCase().startsWith("-play") || message.content.toLowerCase().startsWith("-šuldohraj")  || message.content.toLowerCase().startsWith("-zmrdehraj")){
 		let args = message.content.split(" ");
@@ -135,10 +140,13 @@ bot.on('message', message => {
 				else{
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
-						message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
-						message.channel.send(command.setTitle('Přehrávám hudbu...').setColor('#4287f5').setDescription("Vyžádal: " + message.author.username));
+						message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5').addFields(""));
+						message.channel.send(command.setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
+							{ name: '**Vyžádal**', value: message.author.username },
+							{ name: '**Hlasitost**', value: volume + "%" }
+						));
 						const stream = ytdl(url, {filter: 'audioonly'});
-						const dispatcher = connection.play(stream, streamOptions) 
+						const dispatcher = connection.play(stream, streamOptions)
 						.on("end",()=>{
 							console.log("Písnička skončila"),
 							message.member.voice.channel.leave();
@@ -147,7 +155,7 @@ bot.on('message', message => {
 				}
 			} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').setDescription(""));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').setDescription("").addFields());
 		}
 	}
 });
@@ -157,7 +165,7 @@ bot.on('message', message => {
 	const ytdl = require("ytdl-core");
 	const streamOptions = {
 		seek: 0,
-		volume: 1
+		volume: 100
 	}
 	if(message.content.toLowerCase().startsWith("-adolfeen")){
 		let adolfeen_url = "https://youtu.be/OuMbeT12Ccc";
@@ -173,7 +181,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
 		}
 	}
 });
@@ -199,7 +207,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
 		}
 	}
 });
@@ -225,7 +233,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
 		}
 	}
 });
@@ -276,7 +284,7 @@ bot.on('message', message =>{
 		purge();
 		}
 		else{
-			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5'));
+			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5').addFields().setDescription(""));
 		}
 	}
 });
