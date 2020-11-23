@@ -48,8 +48,8 @@ bot.on('message', async message => {
 
 			let resultsEmdeb = new Discord.MessageEmbed()
 				.setTitle("Výsledky hlasování")
-				.addField("✔️: ", `${reactions.get("✔️").count-1} hlasů`)	
-				.addField("❌: ", `${reactions.get("❌").count-1} hlasů`)
+				.addField("✔️: ", `${reactions.get("✔️").count - 1} hlasů`)	
+				.addField("❌: ", `${reactions.get("❌").count - 1} hlasů`)
 
 		message.channel.send(resultsEmbed);
 		poolMessage.delete(0);
