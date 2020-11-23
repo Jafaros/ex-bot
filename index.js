@@ -39,7 +39,7 @@ bot.on('message', async message => {
 			.setDescription(argy.join(" "))
 			let poolMessage = await message.channel.send(poolEmbed);
 	  
-			await poolMessage.react("✔️");
+			await poolMessage.react("✅");
 			await poolMessage.react("❌");
 			
 			message.delete({timeout: 1000});
@@ -48,7 +48,7 @@ bot.on('message', async message => {
 
 			let resultsEmdeb = new Discord.MessageEmbed()
 				.setTitle("Výsledky hlasování")
-				.addField("✔️: ", `${reactions.get("✔️").count - 1} hlasů`)	
+				.addField("✅: ", `${reactions.get("✅").count - 1} hlasů`)	
 				.addField("❌: ", `${reactions.get("❌").count - 1} hlasů`)
 
 		message.channel.send(resultsEmbed);
