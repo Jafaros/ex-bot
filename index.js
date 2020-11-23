@@ -33,7 +33,7 @@ bot.on('message', async message => {
 	if(message.content.toLowerCase().startsWith("-vote")){
 		let argy = message.content.split("-vote");
 		
-		if (message.channel.id === "696813777013833729") {
+		if (message.channel.id === "696813777013833729" || message.channel.id === "683418675172212819") {
 			let poolEmbed = new Discord.MessageEmbed()
 			.setTitle("Hlasování")
 			.setDescription(argy.join(" "))
