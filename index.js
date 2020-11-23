@@ -71,7 +71,7 @@ bot.on('message', message => {
 				const connection = message.member.voice.channel.join()
 				.then(connection => {
 				const dispatcher = connection.play(url_fm, streamOptions);
-				message.channel.send(command.setColor('#028de3').setDescription(radio));
+				message.channel.send(command.setColor('#028de3').setTitle(radio));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
 					})
 				} 
