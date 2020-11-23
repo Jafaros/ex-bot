@@ -71,7 +71,7 @@ bot.on('message', message => {
 				const connection = message.member.voice.channel.join()
 				.then(connection => {
 				const dispatcher = connection.play(url_fm, streamOptions);
-				message.channel.send(command.setColor('#028de3').setTitle(radio));
+				message.channel.send(command.setColor('#028de3').setTitle(radio).setDescription("Vyžádal: " + message.author.username));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
 					})
 				} 
@@ -134,7 +134,7 @@ bot.on('message', message => {
 				else{
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
-						message.channel.send(command.setTitle('Připojuji se ke kanálu' + message.member.voice.channel.name).setColor('#4287f5'));
+						message.channel.send(command.setTitle('Připojuji se ke kanálu ' + message.member.voice.channel.name).setColor('#4287f5'));
 						message.channel.send(command.setTitle('Přehrávám hudbu...').setColor('#4287f5').setDescription("Vyžádal: " + message.author.username));
 						const stream = ytdl(url, {filter: 'audioonly'});
 						const dispatcher = connection.play(stream, streamOptions) 
