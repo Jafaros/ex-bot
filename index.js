@@ -235,7 +235,7 @@ bot.on('message', message => {
 			const zprava = new Discord.MessageEmbed()
 				.setColor('#3cb5e8')
 				.setTitle(message.content)
-				.setDescription('Prostě joint')
+				.setDescription('Prostě joint\nVyžádal: ', message.author)
 				.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
 				.setImage('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
 				.setTimestamp()
