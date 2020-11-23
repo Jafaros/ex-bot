@@ -144,7 +144,7 @@ bot.on('message', message => {
 				}
 			} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').setDescription(""));
 		}
 	}
 });
