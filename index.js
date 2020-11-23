@@ -76,7 +76,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send('Musíš být ve voicechatu!');
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
 		}
 }});
 
@@ -96,7 +96,7 @@ bot.on('message', async message => {
     if (message.member.voice.channel) {
       const connection = await message.member.voice.channel.join();
     } else {
-      message.channel.send('Musíš být ve voicechatu!');
+      message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
     }
   }
 });
@@ -112,7 +112,7 @@ bot.on('message', async message => {
 	  bot.user.setActivity("Server", {type: "WATCHING"});
     } 
 	else {
-      message.channel.send('BOT se odpojil!');
+      message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
     }
   }
 });
@@ -138,13 +138,13 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave();
+							message.member.voice.channel.leave();
 						});
 					})
 				}
 			} 
 			else {
-				message.channel.send('Musíš být ve voicechatu!');
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
 		}
 	}
 });
@@ -165,12 +165,12 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave();
+							message.member.voice.channel.leave();
 						});
 					})
 				} 
 			else {
-				message.channel.send('Musíš být ve voicechatu!');
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
 		}
 	}
 });
@@ -191,12 +191,12 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave()
+							message.member.voice.channel.leave();
 						});
 					})
 				} 
 			else {
-				message.channel.send('Musíš být ve voicechatu!');
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
 		}
 	}
 });
@@ -217,12 +217,12 @@ bot.on('message', message => {
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
-							voice.channel.leave()
+							message.member.voice.channel.leave();
 						});
 					})
 				} 
 			else {
-				message.channel.send('Musíš být ve voicechatu!');
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
 		}
 	}
 });
@@ -267,13 +267,13 @@ bot.on('message', message =>{
 			console.log(fetched.size + ' zpráv nalezeno, probíhá mazání...\nTato akce může trvat několik sekund...');
 			
 			message.channel.bulkDelete(fetched)
-			.catch(error => message.channel.send("CHYBA: ${error}"));
+			.catch(error => message.channel.send("CHYBA: " `${error}`));
 		}
 		
 		purge();
 		}
 		else{
-			message.channel.send("Nemáš dostatečná oprávnění pro použití tohoto příkazu");
+			message.channel.send(command.setDescription("Nemáš dostatečná oprávnění pro použití tohoto příkazu"));
 		}
 	}
 });
