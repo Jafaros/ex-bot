@@ -135,6 +135,7 @@ bot.on('message', message => {
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
 						const stream = ytdl(url, {filter: 'audioonly'});
+						message.channel.send(command.setTitle('Přehrávám hudbu...').setColor('#4287f5').setDescription("Vyžádal: " + message.author.username));
 						const dispatcher = connection.play(stream, streamOptions) 
 						.on("end",()=>{
 							console.log("Písnička skončila"),
