@@ -76,14 +76,14 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 }});
 
 
 bot.on('message', msg => {
 	if(msg.content === "-help"){
-		msg.channel.send(command.setColor('#028de3').setTitle("HELP").setDescription(help));
+		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help));
 	}
 });
 
@@ -96,7 +96,7 @@ bot.on('message', async message => {
     if (message.member.voice.channel) {
       const connection = await message.member.voice.channel.join();
     } else {
-      message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
     }
   }
 });
@@ -112,7 +112,7 @@ bot.on('message', async message => {
 	  bot.user.setActivity("Server", {type: "WATCHING"});
     } 
 	else {
-      message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
     }
   }
 });
@@ -144,7 +144,7 @@ bot.on('message', message => {
 				}
 			} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -170,7 +170,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -196,7 +196,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -222,7 +222,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!'));
+				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -273,7 +273,7 @@ bot.on('message', message =>{
 		purge();
 		}
 		else{
-			message.channel.send(command.setDescription("Nemáš dostatečná oprávnění pro použití tohoto příkazu"));
+			message.channel.send(command.setDescription("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5'));
 		}
 	}
 });
