@@ -76,7 +76,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 }});
 
@@ -112,7 +112,7 @@ bot.on('message', async message => {
 	  bot.user.setActivity("Server", {type: "WATCHING"});
     } 
 	else {
-      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+      message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
     }
   }
 });
@@ -144,7 +144,7 @@ bot.on('message', message => {
 				}
 			} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -170,7 +170,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -196,7 +196,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -222,7 +222,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -273,7 +273,7 @@ bot.on('message', message =>{
 		purge();
 		}
 		else{
-			message.channel.send(command.setDescription("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5'));
+			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5'));
 		}
 	}
 });
