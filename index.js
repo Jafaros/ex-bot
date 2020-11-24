@@ -88,7 +88,7 @@ bot.on('message', message => {
 
 bot.on('message', msg => {
 	if(msg.content === "-help"){
-		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help).addFields({}));
+		msg.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("HELP").setDescription(help));
 	}
 });
 
