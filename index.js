@@ -76,11 +76,12 @@ bot.on('message', message => {
 				message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 				message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle(radio).addFields(
 					{ name: '**Vyžádal**', value: `${message.author}` },
-					{ name: '**Hlasitost**', value: volume + "00 %" },
+					{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 				));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
-					})
-				} 
+				console.log('Zapnul jsem radio');
+				})
+			} 
 			else {
 				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
@@ -90,6 +91,23 @@ bot.on('message', message => {
 bot.on('message', msg => {
 	if(msg.content === "-help"){
 		msg.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("HELP").setDescription(help));
+	}
+});
+
+bot.on('message', message => {
+	if(message.content.toLowerCase().startsWith("-volume")){
+		let args = message.content.split(" ");
+		let volume = args[1];
+
+		if(volume > 100){
+			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost nemůže přesáhnout 100%"));
+		}
+		else if(volume < 0){
+			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost nemůže být nižší než 0%"));
+		}
+		else{
+			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost úspěšně nastavena na " + "`" + volume + "%`"));
+		}
 	}
 });
 
@@ -144,7 +162,7 @@ bot.on('message', message => {
 						message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 						message.channel.send(new Discord.MessageEmbed().setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
 							{ name: '**Vyžádal**', value: `${message.author}` },
-							{ name: '**Hlasitost**', value: volume + "00 %" }
+							{ name: '**Hlasitost**', value: (volume * 100) + "%" }
 						));
 						const stream = ytdl(url, {filter: 'audioonly'});
 						const dispatcher = connection.play(stream, streamOptions)
