@@ -72,7 +72,7 @@ bot.on('message', message => {
 				const connection = message.member.voice.channel.join()
 				.then(connection => {
 				const dispatcher = connection.play(url_fm, streamOptions);
-				message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+				message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5').addFields());
 				message.channel.send(command.setColor('#4287f5').setTitle(radio).addFields(
 					{ name: '**Vyžádal**', value: message.author.username },
 					{ name: '**Hlasitost**', value: volume + "%" },
