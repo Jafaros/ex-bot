@@ -36,6 +36,7 @@ bot.on('message', async message => {
 		if (message.channel.id === "696813777013833729" || message.channel.id === "683418675172212819") {
 			let poolEmbed = new Discord.MessageEmbed()
 			.setTitle("Hlasování")
+			.setColor("#4287f5")
 			.setDescription(argy.join(" "))
 			let poolMessage = await message.channel.send(poolEmbed);
 	  
