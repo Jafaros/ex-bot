@@ -75,7 +75,7 @@ bot.on('message', message => {
 				const dispatcher = connection.play(url_fm, streamOptions);
 				message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 				message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle(radio).addFields(
-					{ name: '**Vyžádal**', value: message.author.username },
+					{ name: '**Vyžádal**', value: `<@!${message.author}>` },
 					{ name: '**Hlasitost**', value: volume + "00 %" },
 				));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
@@ -143,7 +143,7 @@ bot.on('message', message => {
 					.then(connection => {
 						message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 						message.channel.send(new Discord.MessageEmbed().setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
-							{ name: '**Vyžádal**', value: message.author.username },
+							{ name: '**Vyžádal**', value: `<@!${message.author}>` },
 							{ name: '**Hlasitost**', value: volume + "%" }
 						));
 						const stream = ytdl(url, {filter: 'audioonly'});
