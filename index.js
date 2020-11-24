@@ -79,7 +79,7 @@ bot.on('message', message => {
 					{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 				));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
-				console.log('Zapnul jsem radio');
+				console.log('Zapnul jsem rádio');
 				})
 			} 
 			else {
