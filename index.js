@@ -61,7 +61,7 @@ bot.on('message', async message => {
 //radio
 bot.on('message', message => {
 	const radio_fm = require("ytdl-core");
-	let volume = 100;
+	let volume = 1;
 	const streamOptions = {
 		seek: 0,
 		volume: volume
@@ -75,7 +75,7 @@ bot.on('message', message => {
 				message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 				message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle(radio).addFields(
 					{ name: '**Vyžádal**', value: message.author.username },
-					{ name: '**Hlasitost**', value: volume + "%" },
+					{ name: '**Hlasitost**', value: volume + "00 %" },
 				));
 				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
 					})
