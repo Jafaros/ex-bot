@@ -72,8 +72,8 @@ bot.on('message', message => {
 				const connection = message.member.voice.channel.join()
 				.then(connection => {
 				const dispatcher = connection.play(url_fm, streamOptions);
-				message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5').addFields());
-				message.channel.send(command.setColor('#4287f5').setTitle(radio).addFields(
+				message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+				message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle(radio).addFields(
 					{ name: '**Vyžádal**', value: message.author.username },
 					{ name: '**Hlasitost**', value: volume + "%" },
 				));
@@ -81,14 +81,14 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 }});
 
 
 bot.on('message', msg => {
 	if(msg.content === "-help"){
-		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help).addFields());
+		msg.channel.send(command.setColor('#4287f5').setTitle("HELP").setDescription(help).addFields({}));
 	}
 });
 
@@ -101,7 +101,7 @@ bot.on('message', async message => {
     if (message.member.voice.channel) {
       const connection = await message.member.voice.channel.join();
     } else {
-      message.channel.send(command.setDescription('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+      message.channel.send(new Discord.MessageEmbed().setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
     }
   }
 });
@@ -117,7 +117,7 @@ bot.on('message', async message => {
 	  bot.user.setActivity("Server", {type: "WATCHING"});
     } 
 	else {
-      message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+      message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
     }
   }
 });
@@ -135,13 +135,13 @@ bot.on('message', message => {
 		let url = args[1];
 			if (message.member.voice.channel) {
 				if (url == null){
-					message.channel.send(command.setColor('#9c1111').setTitle("CHYBA").setDescription(url_validate));
+					message.channel.send(new Discord.MessageEmbed().setColor('#9c1111').setTitle("CHYBA").setDescription(url_validate));
 				}
 				else{
 					const connection = message.member.voice.channel.join()
 					.then(connection => {
-						message.channel.send(command.setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5').addFields(""));
-						message.channel.send(command.setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
+						message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+						message.channel.send(new Discord.MessageEmbed().setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
 							{ name: '**Vyžádal**', value: message.author.username },
 							{ name: '**Hlasitost**', value: volume + "%" }
 						));
@@ -155,7 +155,7 @@ bot.on('message', message => {
 				}
 			} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').setDescription("").addFields());
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -181,7 +181,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -207,7 +207,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
@@ -233,7 +233,7 @@ bot.on('message', message => {
 					})
 				} 
 			else {
-				message.channel.send(command.setTitle('Musíš být ve voicechatu!').setColor('#4287f5').addFields());
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
 });
