@@ -81,7 +81,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Evropu 2",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio');
+					console.log('Zapnul jsem rádio Evropu');
 					})
 				} 
 				else if(args[1] == "Impuls"){
@@ -94,7 +94,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Impuls",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio');
+					console.log('Zapnul jsem rádio Impuls');
 					})
 				}
 				else if(args[1] == "Frekvence1"){
@@ -107,7 +107,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Frekvenci 1",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio');
+					console.log('Zapnul jsem rádio Frekvence 1');
 					})
 				}
 				else if(args[1] == "Kroměříž"){
@@ -120,7 +120,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Kroměříž",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio');
+					console.log('Zapnul jsem rádio Kroměříž');
 					})
 				}
 				else if(args[1] == "Kiss"){
@@ -133,7 +133,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Kiss",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio');
+					console.log('Zapnul jsem rádio Kiss');
 					})
 				}
 				else{
