@@ -8,7 +8,7 @@ const command = new Discord.MessageEmbed();
 	
 //hlášky ke commandům
 let stop = "Tato funkce prozatím není přidána";
-let help = "\n-radio - Zapne rádio, které zadáte(Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss)\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro Adminy)\n-leave - opustí voicechat";
+let help = "\n-radio - Zapne rádio, které zadáte(Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss)\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro ty co mají povolení [Správa zpráv])\n-leave - opustí voicechat";
 let url_validate = "Chybí URL adresa nebo je chybná!";
 
 //stav bota při zapnutí
@@ -81,7 +81,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Evropu 2",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio Evropu');
+					console.log('Zapnul jsem rádio Evropu 2 na žádost ' + `${message.author.username}`);
 					})
 				} 
 				else if(args[1] == "Impuls"){
@@ -94,7 +94,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Impuls",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio Impuls');
+					console.log('Zapnul jsem rádio Impuls na žádost ' + `${message.author.username}`);
 					})
 				}
 				else if(args[1] == "Frekvence1"){
@@ -107,7 +107,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Frekvenci 1",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio Frekvence 1');
+					console.log('Zapnul jsem rádio Frekvence 1 na žádost ' + `${message.author.username}`);
 					})
 				}
 				else if(args[1] == "Kroměříž"){
@@ -120,7 +120,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Kroměříž",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio Kroměříž');
+					console.log('Zapnul jsem rádio Kroměříž na žádost ' + `${message.author.username}`);
 					})
 				}
 				else if(args[1] == "Kiss"){
@@ -133,7 +133,7 @@ bot.on('message', message => {
 						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
 					));
 					bot.user.setActivity("Rádio Kiss",{type: "LISTENING"});
-					console.log('Zapnul jsem rádio Kiss');
+					console.log('Zapnul jsem rádio Kiss na žádost ' + `${message.author.username}`);
 					})
 				}
 				else{
@@ -265,16 +265,12 @@ bot.on('message', message =>{
 	let count = cont.slice(1);
 	
 	if(msg.startsWith(prefix)){
-		if(message.member.roles.cache.some(r => r.name === "ADMIN") || message.member.roles.cache.some(m => m.name === "MODERÁTOR")){
+		if(message.member.hasPermission('MANAGE_MESSAGES')){
 		async function purge(){
 			message.delete();
-			
-			if(!message.member.roles.cache.some(r => r.name === "ADMIN" || r.name === "MODERÁTOR")){
-				message.channel.send("Nemáš dostatečná oprávnění pro použití tohoto příkazu");
-			}
-		
+
 			const fetched = await message.channel.messages.fetch({limit: count[0]});
-			console.log(fetched.size + ' zpráv nalezeno, probíhá mazání...\nTato akce může trvat několik sekund...');
+			console.log(fetched.size + ' zpráv nalezeno, probíhá mazání na žádost' + `${message.author.username}` + '\nTato akce může trvat několik sekund...');
 			
 			message.channel.bulkDelete(fetched)
 			.catch(error => message.channel.send("CHYBA: " `${error}`));
@@ -287,3 +283,38 @@ bot.on('message', message =>{
 		}
 	}
 });
+
+//mute
+/*bot.on('message', async message => {
+	if (message.content.toLocaleLowerCase().startsWith("-mute")) {
+		let user = message.content.slice(" ");
+		const member = message.mentions.members.first();
+		let role = message.guild.roles.cache.get("781150207827509308");
+
+		if(!message.member.hasPermission('ADMINISTRATOR')){
+			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5').addFields().setDescription(""));
+		}
+		else{
+			member.roles.add(role).catch(console.error);
+			message.channel.send(command.setTitle("Uživatel byl umlčen na žádost " + "`" + `${message.author.username}` + "`").setColor('#4287f5').addFields().setDescription(""));
+		}
+	}
+  });
+
+  //unmute
+  bot.on('message', async message => {
+	if (message.content.toLocaleLowerCase().startsWith("-unmute")) {
+		let user = message.content.slice(" ");
+		const member = message.mentions.members.first();
+		let role = message.guild.roles.cache.get("781150207827509308");
+
+		if(!message.member.hasPermission('ADMINISTRATOR')){
+			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5').addFields().setDescription(""));
+		}
+		else{
+			member.roles.remove(role).catch(console.error);
+			message.channel.send(command.setTitle("Uživateli bylo umožněno zase mluvit uživatelem " + "`" + `${message.author.username}` + "`").setColor('#4287f5').addFields().setDescription(""));
+		}
+	}
+  });
+  */
