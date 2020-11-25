@@ -7,9 +7,8 @@ bot.login(token);
 const command = new Discord.MessageEmbed();
 	
 //hlášky ke commandům
-let radio = "Zapínám rádio Evropy 2...";
 let stop = "Tato funkce prozatím není přidána";
-let help = "\n-radio - Zapne rádio Evropy 2\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro Adminy)\n-leave - opustí voicechat";
+let help = "\n-radio - Zapne rádio, které zadáte(Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss)\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro Adminy)\n-leave - opustí voicechat";
 let url_validate = "Chybí URL adresa nebo je chybná!";
 
 //stav bota při zapnutí
@@ -67,21 +66,80 @@ bot.on('message', message => {
 		seek: 0,
 		volume: volume
 	}
-	if(message.content.toLowerCase() === "-radio"){
-		let url_fm = "http://ice.actve.net/fm-evropa2-128";
+	if(message.content.toLowerCase().startsWith("-radio")){
+		let args = message.content.split(" ");
+		let radio = args[1];
+		let url_fm = ["http://ice.actve.net/fm-evropa2-128", "http://icecast5.play.cz/impuls128.mp3", "http://ice.actve.net/web-e2-csweb", "http://icecast6.play.cz/radio-kromeriz128.mp3", "http://icecast1.play.cz/kiss128.mp3"];
 			if (message.member.voice.channel) {
-				const connection = message.member.voice.channel.join()
-				.then(connection => {
-				const dispatcher = connection.play(url_fm, streamOptions);
-				message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
-				message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle(radio).addFields(
-					{ name: '**Vyžádal**', value: `${message.author}` },
-					{ name: '**Hlasitost**', value: (volume * 100) + "%" },
-				));
-				bot.user.setActivity("Evropu 2",{type: "LISTENING"});
-				console.log('Zapnul jsem rádio');
-				})
-			} 
+				if(args[1] == "Evropa2"){
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+					const dispatcher = connection.play(url_fm[0], streamOptions);
+					message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle('Spouštím rádio ' + "`" + "Evropa 2" + "`").addFields(
+						{ name: '**Vyžádal**', value: `${message.author}` },
+						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
+					));
+					bot.user.setActivity("Evropu 2",{type: "LISTENING"});
+					console.log('Zapnul jsem rádio');
+					})
+				} 
+				else if(args[1] == "Impuls"){
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+					const dispatcher = connection.play(url_fm[1], streamOptions);
+					message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle('Spouštím rádio ' + "`" + args[1] + "`").addFields(
+						{ name: '**Vyžádal**', value: `${message.author}` },
+						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
+					));
+					bot.user.setActivity("Rádio Impuls",{type: "LISTENING"});
+					console.log('Zapnul jsem rádio');
+					})
+				}
+				else if(args[1] == "Frekvence1"){
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+					const dispatcher = connection.play(url_fm[2], streamOptions);
+					message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle('Spouštím rádio ' + "`" + "Frekvence 1" + "`").addFields(
+						{ name: '**Vyžádal**', value: `${message.author}` },
+						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
+					));
+					bot.user.setActivity("Frekvenci 1",{type: "LISTENING"});
+					console.log('Zapnul jsem rádio');
+					})
+				}
+				else if(args[1] == "Kroměříž"){
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+					const dispatcher = connection.play(url_fm[3], streamOptions);
+					message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle('Spouštím rádio ' + "`" + args[1] + "`").addFields(
+						{ name: '**Vyžádal**', value: `${message.author}` },
+						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
+					));
+					bot.user.setActivity("Rádio Kroměříž",{type: "LISTENING"});
+					console.log('Zapnul jsem rádio');
+					})
+				}
+				else if(args[1] == "Kiss"){
+					const connection = message.member.voice.channel.join()
+					.then(connection => {
+					const dispatcher = connection.play(url_fm[4], streamOptions);
+					message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle('Spouštím rádio ' + "`" + args[1] + "`").addFields(
+						{ name: '**Vyžádal**', value: `${message.author}` },
+						{ name: '**Hlasitost**', value: (volume * 100) + "%" },
+					));
+					bot.user.setActivity("Rádio Kiss",{type: "LISTENING"});
+					console.log('Zapnul jsem rádio');
+					})
+				}
+				else{
+					message.channel.send(new Discord.MessageEmbed().setTitle('Neplatný název rádia').setColor('#4287f5'));
+				}
+			}
 			else {
 				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
@@ -142,7 +200,7 @@ bot.on('message', async message => {
 });
 
 //play music
-bot.on('message', message => {
+/*bot.on('message', message => {
 	const ytdl = require("ytdl-core");
 	
 	let volume = 1;
@@ -178,7 +236,7 @@ bot.on('message', message => {
 				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
 		}
 	}
-});
+});*/
 
 //hlášky
 bot.on('message', message => {
