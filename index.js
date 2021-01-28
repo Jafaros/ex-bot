@@ -7,9 +7,7 @@ bot.login(token);
 const command = new Discord.MessageEmbed();
 	
 //hlášky ke commandům
-let stop = "Tato funkce prozatím není přidána";
 let help = "\n-radio - Zapne rádio, které zadáte(Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss)\n-help - Zobrazí všechny dostupné příkazy\n-play - Zahraje vám co chcete!\n-delete - Smaže zadaný počet zpráv(Jen pro ty co mají povolení [Správa zpráv])\n-leave - opustí voicechat";
-let url_validate = "Chybí URL adresa nebo je chybná!";
 
 //stav bota při zapnutí
 bot.on('ready', () =>{
@@ -60,7 +58,7 @@ bot.on('message', async message => {
 
 //radio
 bot.on('message', message => {
-	const radio_fm = require("ytdl-core");
+	const ytdl = require("ytdl-core");
 	let volume = 1;
 	const streamOptions = {
 		seek: 0,
@@ -68,7 +66,6 @@ bot.on('message', message => {
 	}
 	if(message.content.toLowerCase().startsWith("-radio")){
 		let args = message.content.split(" ");
-		let radio = args[1];
 		let url_fm = ["http://ice.actve.net/fm-evropa2-128", "http://icecast5.play.cz/impuls128.mp3", "http://ice.actve.net/web-e2-csweb", "http://icecast6.play.cz/radio-kromeriz128.mp3", "http://icecast1.play.cz/kiss128.mp3"];
 			if (message.member.voice.channel) {
 				if(args[1] == "Evropa2"){
@@ -137,12 +134,12 @@ bot.on('message', message => {
 					})
 				}
 				else{
-					message.channel.send(new Discord.MessageEmbed().setTitle('Neplatný název rádia').setColor('#4287f5'));
+					message.channel.send(new Discord.MessageEmbed().setTitle('Neplatný název rádia').setColor('#c90000'));
 				}
 			}
 			else {
-				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
-		}
+				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#c90000'));
+			}
 }});
 
 
@@ -158,10 +155,10 @@ bot.on('message', message => {
 		let volume = args[1];
 
 		if(volume > 100){
-			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost nemůže přesáhnout 100%"));
+			message.channel.send(new Discord.MessageEmbed().setColor('#c90000').setTitle("Hlasitost nemůže přesáhnout 100%"));
 		}
 		else if(volume < 0){
-			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost nemůže být nižší než 0%"));
+			message.channel.send(new Discord.MessageEmbed().setColor('#c90000').setTitle("Hlasitost nemůže být nižší než 0%"));
 		}
 		else{
 			message.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Hlasitost úspěšně nastavena na " + "`" + volume + "%`"));
@@ -176,9 +173,10 @@ bot.on('message', async message => {
 
   if (message.content === '-join') {
     if (message.member.voice.channel) {
-      const connection = await message.member.voice.channel.join();
+	  const connection = await message.member.voice.channel.join();
+	  message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
     } else {
-      message.channel.send(new Discord.MessageEmbed().setDescription('Musíš být ve voicechatu!').setColor('#4287f5'));
+      message.channel.send(new Discord.MessageEmbed().setDescription('Musíš být ve voicechatu!').setColor('#c90000'));
     }
   }
 });
@@ -192,68 +190,168 @@ bot.on('message', async message => {
     if (message.member.voice.channel) {
       const disconnect = await message.member.voice.channel.leave();
 	  bot.user.setActivity("Server", {type: "WATCHING"});
+	  message.channel.send(new Discord.MessageEmbed().setTitle('Odpojuji se od kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
     } 
 	else {
-      message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
+      message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#c90000'));
     }
   }
 });
 
-//play music
-/*bot.on('message', message => {
-	const ytdl = require("ytdl-core");
-	
-	let volume = 1;
-	const streamOptions = {
-		seek: 0,
-		volume: volume
-	}
-	if(message.content.toLowerCase().startsWith("-play") || message.content.toLowerCase().startsWith("-šuldohraj")  || message.content.toLowerCase().startsWith("-zmrdehraj")){
-		let args = message.content.split(" ");
-		let url = args[1];
-			if (message.member.voice.channel) {
-				if (url == null){
-					message.channel.send(new Discord.MessageEmbed().setColor('#9c1111').setTitle("CHYBA").setDescription(url_validate));
-				}
-				else{
-					const connection = message.member.voice.channel.join()
-					.then(connection => {
-						message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
-						message.channel.send(new Discord.MessageEmbed().setTitle('Přehrávám hudbu...').setColor('#4287f5').addFields(
-							{ name: '**Vyžádal**', value: `${message.author}` },
-							{ name: '**Hlasitost**', value: (volume * 100) + "%" }
-						));
-						const stream = ytdl(url, {filter: 'audioonly'});
-						const dispatcher = connection.play(stream, streamOptions);
-						dispatcher.on("end",()=>{
-							console.log("Písnička skončila"),
-							message.member.voice.channel.leave();
-						});
-					})
-				}
-			} 
-			else {
-				message.channel.send(new Discord.MessageEmbed().setTitle('Musíš být ve voicechatu!').setColor('#4287f5'));
-		}
-	}
-});*/
+//play, skip, stop
 
-//hlášky
-bot.on('message', message => {
-	if(message.content === "~TenJont"){
-			let zpravy_tenjont = ["Jé hele to je Ten Joint!", "Už ho furt nezmiňuj, chudáka, otravuješ ho furt oznámením...", "Ha, TenJont!", "Zdar Piškot!"];
-			const zprava = new Discord.MessageEmbed()
-				.setColor('#3cb5e8')
-				.setTitle(message.content)
-				.setDescription('Prostě joint\nVyžádal: ' + message.author.username)
-				.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
-				.setImage('https://upload.wikimedia.org/wikipedia/commons/6/63/Ingress_Logo.png')
-				.setTimestamp()
-				.setFooter('By Jafaros 02.04.2020');
-			
-			message.channel.send(zpravy_tenjont[Math.floor(Math.random() * zpravy_tenjont.length)]);
-			message.channel.send(zprava);
+const ytdl = require("ytdl-core");
+const queue = new Map();
+
+bot.on("message", async message => {
+
+	if (message.author.bot) return;
+
+	const serverQueue = queue.get(message.guild.id);
+  
+	if (message.content.startsWith(`-play`)) {
+	  execute(message, serverQueue);
+	  return;
+	} else if (message.content.startsWith(`-skip`)) {
+	  skip(message, serverQueue);
+	  return;
+	} else if (message.content.startsWith(`-stop`)) {
+	  stop(message, serverQueue);
+	  return;
 	}
+  
+  async function execute(message, serverQueue) {
+	const args = message.content.split(" ");
+  
+	const voiceChannel = message.member.voice.channel;
+	if (!voiceChannel)
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Musíš být ve voice chatu abys mohl přehrávat hudbu!").setColor('#c90000'));
+	const permissions = voiceChannel.permissionsFor(message.client.user);
+	if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Nemám dostatečná oprávnění na to pouštět hudbu!").setColor('#c90000'));
+	}
+  
+	const songInfo = await ytdl.getInfo(args[1]);
+	const song = {
+		  title: songInfo.videoDetails.title,
+		  url: songInfo.videoDetails.video_url,
+		  author: songInfo.videoDetails.author,
+		  thumbnail: songInfo.videoDetails.thumbnails.thumbnail_url,
+		  length: songInfo.videoDetails.lengthSeconds,
+	 };
+  
+	if (!serverQueue) {
+	  const queueContruct = {
+		textChannel: message.channel,
+		voiceChannel: voiceChannel,
+		connection: null,
+		songs: [],
+		volume: 1,
+		playing: true
+	  };
+  
+	  queue.set(message.guild.id, queueContruct);
+  
+	  queueContruct.songs.push(song);
+  
+	  try {
+		var connection = await voiceChannel.join();
+		queueContruct.connection = connection;
+		play(message.guild, queueContruct.songs[0]);
+	  } catch (err) {
+		console.log(err);
+		queue.delete(message.guild.id);
+		return message.channel.send(err);
+	  }
+	} else {
+	  serverQueue.songs.push(song);
+	  return message.channel.send(`**${song.title}** Byla přidána do queue`);
+	}
+  }
+  
+  function skip(message, serverQueue) {
+	if (!message.member.voice.channel)
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Musíš být ve voice channelu abys mohl překočit písničku!").setColor('#c90000'));
+
+	if (!serverQueue)
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Už není žádná písnička na přeskočení!").setColor('#c90000'));
+	serverQueue.connection.dispatcher.end();
+
+	message.channel.send(new Discord.MessageEmbed().setTitle("Přeskakuji písničku...").setColor('#4287f5'));
+  }
+  
+  function stop(message, serverQueue) {
+	if (!message.member.voice.channel)
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Musíš být ve voice channelu abys mohl zastavit hudbu!").setColor('#c90000'));
+	  
+	if (!serverQueue)
+	  return message.channel.send(new Discord.MessageEmbed().setTitle("Přehrávání skončilo!").setColor('#c90000'));
+	  
+	serverQueue.songs = [];
+	serverQueue.connection.dispatcher.end();
+	message.channel.send(new Discord.MessageEmbed().setTitle("Zastavuji přehrávání...").setColor('#4287f5'));
+	message.channel.send(new Discord.MessageEmbed().setTitle('Odpojuji se od kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+	console.log("Hudba byla pozastavena");
+  }
+  
+  function play(guild, song) {
+
+	const serverQueue = queue.get(guild.id);
+
+	if (!song) {
+	  serverQueue.voiceChannel.leave();
+	  queue.delete(guild.id);
+	  return;
+	}
+
+	let videoLength;
+	let seconds = song.length;
+
+	if (!seconds) return '';
+   
+	let duration = seconds;
+	let hours = duration / 3600;
+	duration = duration % (3600);
+   
+	let min = parseInt(duration / 60);
+	duration = duration % (60);
+   
+	let sec = parseInt(duration);
+   
+	if (sec < 10) {
+		sec = `0${sec}`;
+	}
+	if (min < 10) {
+		min = `0${min}`;
+	}
+
+	if (parseInt(hours, 10) > 0) {
+		videoLength =  `${parseInt(hours, 10)}:${min}:${sec}`;
+	}
+	else if (min == 0) {
+		videoLength = `0:0:${sec}`;
+	}
+	else {
+		videoLength = `0:${min}:${sec}`;
+	}
+  
+	const dispatcher = serverQueue.connection
+	  .play(ytdl(song.url))
+	  .on("finish", () => {
+		serverQueue.songs.shift();
+		play(guild, serverQueue.songs[0]);
+	  })
+	  .on("error", error => console.error(error));
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 1);
+	message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
+	console.log("Zapinam hudbu...");
+	serverQueue.textChannel.send(new Discord.MessageEmbed().setTitle(`**${song.title}**`).setURL(`${song.url}`).setColor("#4287f5")
+	.setAuthor("Přehrávám: ").addFields(
+		{ name: '**Autor: **', value: `${song.author}` },
+		{ name: '**Délka: **', value: "`" + videoLength + "`", inline: true },
+		{ name: '**Vyžádal: **', value: `${message.author}`, inline: true },
+	));
+  }
 });
 
 //mazání zpráv
@@ -283,38 +381,3 @@ bot.on('message', message =>{
 		}
 	}
 });
-
-//mute
-/*bot.on('message', async message => {
-	if (message.content.toLocaleLowerCase().startsWith("-mute")) {
-		let user = message.content.slice(" ");
-		const member = message.mentions.members.first();
-		let role = message.guild.roles.cache.get("781150207827509308");
-
-		if(!message.member.hasPermission('ADMINISTRATOR')){
-			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5').addFields().setDescription(""));
-		}
-		else{
-			member.roles.add(role).catch(console.error);
-			message.channel.send(command.setTitle("Uživatel byl umlčen na žádost " + "`" + `${message.author.username}` + "`").setColor('#4287f5').addFields().setDescription(""));
-		}
-	}
-  });
-
-  //unmute
-  bot.on('message', async message => {
-	if (message.content.toLocaleLowerCase().startsWith("-unmute")) {
-		let user = message.content.slice(" ");
-		const member = message.mentions.members.first();
-		let role = message.guild.roles.cache.get("781150207827509308");
-
-		if(!message.member.hasPermission('ADMINISTRATOR')){
-			message.channel.send(command.setTitle("Nemáš dostatečná oprávnění pro použití tohoto příkazu").setColor('#4287f5').addFields().setDescription(""));
-		}
-		else{
-			member.roles.remove(role).catch(console.error);
-			message.channel.send(command.setTitle("Uživateli bylo umožněno zase mluvit uživatelem " + "`" + `${message.author.username}` + "`").setColor('#4287f5').addFields().setDescription(""));
-		}
-	}
-  });
-  */
