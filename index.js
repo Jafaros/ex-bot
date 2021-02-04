@@ -252,7 +252,7 @@ bot.on("message", async message => {
 	  }
 	} else {
 	  serverQueue.songs.push(song);
-	  return message.channel.send(`**${song.title}** Byla přidána do queue`);
+	  return message.channel.send(new Discord.MessageEmbed().setTitle(`**${song.title}** Byla přidána do queue`).setColor('#4287f5'));
 	}
   }
   
