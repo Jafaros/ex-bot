@@ -146,6 +146,7 @@ bot.on('message', message => {
 
 bot.on('message', msg => {
 	if(msg.content == "-help"){
+		msg.delete({timeout: 100});
 		msg.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Dostupné příkazy").setDescription(help));
 	}
 });
