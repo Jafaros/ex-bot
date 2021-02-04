@@ -20,7 +20,7 @@ bot.on('ready', () =>{
 
 //ping pong
 bot.on('message', message => {
-  if (message.content === '-ping') {
+  if (message.content == '-ping') {
     message.channel.send(`Tvůj ping je: **${Date.now() - message.createdTimestamp}ms**\nLatence API je:  **${Math.round(bot.ws.ping)}ms**`);
   }
 });
@@ -145,8 +145,7 @@ bot.on('message', message => {
 
 
 bot.on('message', msg => {
-	if(msg.content === "-help"){
-		msg.delete({timeout: 100});
+	if(msg.content == "-help"){
 		msg.channel.send(new Discord.MessageEmbed().setColor('#4287f5').setTitle("Dostupné příkazy").setDescription(help));
 	}
 });
@@ -155,7 +154,7 @@ bot.on('message', msg => {
 bot.on('message', async message => {
   if (!message.guild) return;
 
-  if (message.content === '-join') {
+  if (message.content == '-join') {
     if (message.member.voice.channel) {
 	  const connection = await message.member.voice.channel.join();
 	  message.delete({timeout: 1000});
@@ -172,7 +171,7 @@ bot.on('message', async message => {
   if (!message.guild) 
 	  return;
 
-  if (message.content === '-leave') {
+  if (message.content == '-leave') {
     if (message.member.voice.channel) {
 	  const disconnect = await message.member.voice.channel.leave();
 	  message.delete({timeout: 1000});
@@ -197,6 +196,7 @@ bot.on("message", async message => {
 	const serverQueue = queue.get(message.guild.id);
   
 	if (message.content.startsWith(`-play`)) {
+		message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	  execute(message, serverQueue);
 	  return;
 	} else if (message.content.startsWith(`-skip`)) {
@@ -261,8 +261,7 @@ bot.on("message", async message => {
 	  return message.channel.send(new Discord.MessageEmbed().setTitle("Musíš být ve voicechatu abys mohl překočit písničku").setColor('#c90000'));
 
 	if (!serverQueue)
-	  return message.channel.send(new Discord.MessageEmbed().setTitle("Už není žádná písnička na přeskočení").setColor('#c90000'));
-	serverQueue.connection.dispatcher.end();
+	  return serverQueue.connection.dispatcher.end();
 
 	message.channel.send(new Discord.MessageEmbed().setTitle("Přeskakuji písničku...").setColor('#4287f5'));
   }
@@ -287,6 +286,7 @@ bot.on("message", async message => {
 
 	if (!song) {
 	  serverQueue.voiceChannel.leave();
+	  message.channel.send(new Discord.MessageEmbed().setTitle('Odpojuji se od kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	  queue.delete(guild.id);
 	  return;
 	}
@@ -330,7 +330,6 @@ bot.on("message", async message => {
 	  })
 	  .on("error", error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 1);
-	message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	console.log("Zapinam hudbu...");
 	serverQueue.textChannel.send(new Discord.MessageEmbed().setTitle(`**${song.title}**`).setURL(`${song.url}`).setThumbnail("https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png").setColor("#4287f5")
 	.setAuthor("Přehrávám: ").addFields(
