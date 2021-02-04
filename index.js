@@ -166,6 +166,7 @@ bot.on('message', async message => {
   }
 });
 
+
 //disconect discord voicechat server
 bot.on('message', async message => {
   if (!message.guild) 
