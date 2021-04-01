@@ -197,7 +197,6 @@ bot.on("message", async message => {
 	const serverQueue = queue.get(message.guild.id);
   
 	if (message.content.startsWith(`-play`)) {
-		message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	  execute(message, serverQueue);
 	  return;
 	} else if (message.content.startsWith(`-skip`)) {
@@ -277,7 +276,6 @@ bot.on("message", async message => {
 	serverQueue.songs = [];
 	serverQueue.connection.dispatcher.end();
 	message.channel.send(new Discord.MessageEmbed().setTitle("Zastavuji přehrávání...").setColor('#4287f5'));
-	message.channel.send(new Discord.MessageEmbed().setTitle('Odpojuji se od kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	console.log("Hudba byla pozastavena");
   }
   
@@ -332,6 +330,7 @@ bot.on("message", async message => {
 	  .on("error", error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 1);
 	console.log("Zapinam hudbu...");
+	message.channel.send(new Discord.MessageEmbed().setTitle('Připojuji se ke kanálu ' + "`" + message.member.voice.channel.name + "`").setColor('#4287f5'));
 	serverQueue.textChannel.send(new Discord.MessageEmbed().setTitle(`**${song.title}**`).setURL(`${song.url}`).setThumbnail("https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png").setColor("#4287f5")
 	.setAuthor("Přehrávám: ").addFields(
 		{ name: '**Autor: **', value: `${song.author}` },
