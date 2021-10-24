@@ -8,7 +8,7 @@ const command = new Discord.MessageEmbed();
 
 //hlášky ke commandům
 let help =
-  "\n**RADIO** - Zapne rádio (Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss) `-radio Evropa2`\n**HELP** - Zobrazí všechny dostupné příkazy `-help`\n**PLAY** - Zahraje vám co chcete `-play YoutubeVideoURL`\n**STOP** - Zastaví přehávání hudby `-stop`\n**SKIP** Přeskočí písničku `-skip`\n**DELETE** - Smaže zadaný počet zpráv(Jen pro ty co mají povolení [Správa zpráv]) `-delete PočetZpráv`\n**LEAVE** - opustí voicechat `-leave`";
+  "\n**RADIO** - Zapne rádio (Evropa 2, Impuls, Frekvence 1, Kroměříž, Kiss) `-radio Evropa2`\n**HELP** - Zobrazí všechny dostupné příkazy `-ohelp`\n**PLAY** - Zahraje vám co chcete `-oplay YoutubeVideoURL`\n**STOP** - Zastaví přehávání hudby `-ostop`\n**SKIP** Přeskočí písničku `-oskip`\n**DELETE** - Smaže zadaný počet zpráv(Jen pro ty co mají povolení [Správa zpráv]) `-odelete PočetZpráv`\n**LEAVE** - opustí voicechat `-oleave`";
 
 //stav bota při zapnutí
 bot.on("ready", () => {
@@ -21,7 +21,7 @@ bot.on("ready", () => {
 
 //ping pong
 bot.on("message", (message) => {
-  if (message.content == "-ping") {
+  if (message.content == "-oping") {
     message.channel.send(
       `Tvůj ping je: **${
         Date.now() - message.createdTimestamp
@@ -32,8 +32,8 @@ bot.on("message", (message) => {
 
 //hlasování
 bot.on("message", async (message) => {
-  if (message.content.toLowerCase().startsWith("-vote")) {
-    let args = message.content.split("-vote");
+  if (message.content.toLowerCase().startsWith("-ovote")) {
+    let args = message.content.split("-ovote");
 
     if (message.channel.id) {
       let poolEmbed = new Discord.MessageEmbed()
@@ -70,248 +70,114 @@ bot.on("message", async (message) => {
   }
 });
 
-//radio
-bot.on("message", (message) => {
-  const ytdl = require("ytdl-core");
+let inChannel = 0;
+let url_fm = [
+  "http://ice.actve.net/fm-evropa2-128",
+  "http://icecast5.play.cz/impuls128.mp3",
+  "http://ice.actve.net/web-e2-csweb",
+  "http://icecast6.play.cz/radio-kromeriz128.mp3",
+  "http://icecast1.play.cz/kiss128.mp3",
+];
+
+let radio_thumbnails = [
+  "https://www.designportal.cz/wp-content/uploads/2015/03/evropa-2-logo-02.jpg",
+  "https://eurozpravy.cz/pictures/photo/2015/02/04/impuls-1423045416-a89b38fd.jpg",
+  "https://cdn-radiotime-logos.tunein.com/s2104g.png",
+  "https://www.mediar.cz/s/2012/12/radio-kromeriz.png",
+  "https://www.kiss.cz/data/download/Kiss_BeHappy.png",
+];
+
+function radioSelection(message, args) {
+  let index = 5;
   let volume = 1;
   const streamOptions = {
     seek: 0,
     volume: volume,
   };
-  if (message.content.toLowerCase().startsWith("-radio")) {
-    let args = message.content.split(" ");
-    let url_fm = [
-      "http://ice.actve.net/fm-evropa2-128",
-      "http://icecast5.play.cz/impuls128.mp3",
-      "http://ice.actve.net/web-e2-csweb",
-      "http://icecast6.play.cz/radio-kromeriz128.mp3",
-      "http://icecast1.play.cz/kiss128.mp3",
-    ];
-    if (message.member.voice.channel) {
-      if (args[1] == "Evropa2") {
-        const connection = message.member.voice.channel
-          .join()
-          .then((connection) => {
-            const dispatcher = connection.play(url_fm[0], streamOptions);
-            connection.voice.setSelfDeaf(true);
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(
-                  "Připojuji se ke kanálu " +
-                    "`" +
-                    message.member.voice.channel.name +
-                    "`"
-                )
-                .setColor("#4287f5")
-            );
 
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setColor("#4287f5")
-                .setTitle("Spouštím rádio " + "`" + "Evropa 2" + "`")
-                .addFields(
-                  {
-                    name: "**Vyžádal**",
-                    value: `${message.author}`,
-                    inline: true,
-                  },
-                  {
-                    name: "**Hlasitost**",
-                    value: volume * 100 + "%",
-                    inline: true,
-                  }
-                )
-                .setThumbnail(
-                  "https://www.designportal.cz/wp-content/uploads/2015/03/evropa-2-logo-02.jpg"
-                )
-            );
-            console.log(
-              "Zapnul jsem rádio Evropu 2 na žádost " +
-                `${message.author.username}`
-            );
-          });
-      } else if (args[1] == "Impuls") {
-        const connection = message.member.voice.channel
-          .join()
-          .then((connection) => {
-            const dispatcher = connection.play(url_fm[1], streamOptions);
-            connection.voice.setSelfDeaf(true);
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(
-                  "Připojuji se ke kanálu " +
-                    "`" +
-                    message.member.voice.channel.name +
-                    "`"
-                )
-                .setColor("#4287f5")
-            );
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setColor("#4287f5")
-                .setTitle("Spouštím rádio " + "`" + args[1] + "`")
-                .addFields(
-                  {
-                    name: "**Vyžádal**",
-                    value: `${message.author}`,
-                    inline: true,
-                  },
-                  {
-                    name: "**Hlasitost**",
-                    value: volume * 100 + "%",
-                    inline: true,
-                  }
-                )
-                .setThumbnail(
-                  "https://eurozpravy.cz/pictures/photo/2015/02/04/impuls-1423045416-a89b38fd.jpg"
-                )
-            );
-            console.log(
-              "Zapnul jsem rádio Impuls na žádost " +
-                `${message.author.username}`
-            );
-          });
-      } else if (args[1] == "Frekvence1") {
-        const connection = message.member.voice.channel
-          .join()
-          .then((connection) => {
-            const dispatcher = connection.play(url_fm[2], streamOptions);
-            connection.voice.setSelfDeaf(true);
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(
-                  "Připojuji se ke kanálu " +
-                    "`" +
-                    message.member.voice.channel.name +
-                    "`"
-                )
-                .setColor("#4287f5")
-            );
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setColor("#4287f5")
-                .setTitle("Spouštím rádio " + "`" + "Frekvence 1" + "`")
-                .addFields(
-                  {
-                    name: "**Vyžádal**",
-                    value: `${message.author}`,
-                    inline: true,
-                  },
-                  {
-                    name: "**Hlasitost**",
-                    value: volume * 100 + "%",
-                    inline: true,
-                  }
-                )
-                .setThumbnail(
-                  "https://cdn-radiotime-logos.tunein.com/s2104g.png"
-                )
-            );
-            console.log(
-              "Zapnul jsem rádio Frekvence 1 na žádost " +
-                `${message.author.username}`
-            );
-          });
-      } else if (args[1] == "Kroměříž") {
-        const connection = message.member.voice.channel
-          .join()
-          .then((connection) => {
-            const dispatcher = connection.play(url_fm[3], streamOptions);
-            connection.voice.setSelfDeaf(true);
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(
-                  "Připojuji se ke kanálu " +
-                    "`" +
-                    message.member.voice.channel.name +
-                    "`"
-                )
-                .setColor("#4287f5")
-            );
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setColor("#4287f5")
-                .setTitle("Spouštím rádio " + "`" + args[1] + "`")
-                .addFields(
-                  {
-                    name: "**Vyžádal**",
-                    value: `${message.author}`,
-                    inline: true,
-                  },
-                  {
-                    name: "**Hlasitost**",
-                    value: volume * 100 + "%",
-                    inline: true,
-                  }
-                )
-                .setThumbnail(
-                  "https://www.mediar.cz/s/2012/12/radio-kromeriz.png"
-                )
-            );
-            console.log(
-              "Zapnul jsem rádio Kroměříž na žádost " +
-                `${message.author.username}`
-            );
-          });
-      } else if (args[1] == "Kiss") {
-        const connection = message.member.voice.channel
-          .join()
-          .then((connection) => {
-            const dispatcher = connection.play(url_fm[4], streamOptions);
-            connection.voice.setSelfDeaf(true);
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(
-                  "Připojuji se ke kanálu " +
-                    "`" +
-                    message.member.voice.channel.name +
-                    "`"
-                )
-                .setColor("#4287f5")
-            );
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setColor("#4287f5")
-                .setTitle("Spouštím rádio " + "`" + args[1] + "`")
-                .addFields(
-                  {
-                    name: "**Vyžádal**",
-                    value: `${message.author}`,
-                    inline: true,
-                  },
-                  {
-                    name: "**Hlasitost**",
-                    value: volume * 100 + "%",
-                    inline: true,
-                  }
-                )
-                .setThumbnail(
-                  "https://www.kiss.cz/data/download/Kiss_BeHappy.png"
-                )
-            );
-            console.log(
-              "Zapnul jsem rádio Kiss na žádost " + `${message.author.username}`
-            );
-          });
-      } else {
-        message.channel.send(
-          new Discord.MessageEmbed()
-            .setTitle("Neplatný název rádia")
-            .setColor("#c90000")
-        );
-      }
+  if (message.member.voice.channel && inChannel == 0) {
+    inChannel = 1;
+    message.channel.send(
+      new Discord.MessageEmbed()
+        .setTitle(
+          "Připojuji se ke kanálu " +
+            "`" +
+            message.member.voice.channel.name +
+            "`"
+        )
+        .setColor("#4287f5")
+    );
+  }
+
+  if (message.member.voice.channel && inChannel == 1) {
+    if (args == "Evropa2") {
+      index = 0;
+    } else if (args == "Impuls") {
+      index = 1;
+    } else if (args == "Frekvence1") {
+      index = 2;
+    } else if (args == "Kroměříž") {
+      index = 3;
+    } else if (args == "Kiss") {
+      index = 4;
     } else {
       message.channel.send(
         new Discord.MessageEmbed()
-          .setTitle("Musíš být ve voicechatu!")
+          .setTitle("Neplatný název rádia")
           .setColor("#c90000")
       );
     }
+  } else {
+    message.channel.send(
+      new Discord.MessageEmbed()
+        .setTitle("Musíš být ve voicechatu!")
+        .setColor("#c90000")
+    );
+  }
+
+  if (index >= 0 && index <= 4) {
+    const connection = message.member.voice.channel
+      .join()
+      .then((connection) => {
+        const dispatcher = connection.play(url_fm[index], streamOptions);
+        connection.voice.setSelfDeaf(true);
+      });
+  }
+  message.channel.send(
+    new Discord.MessageEmbed()
+      .setColor("#4287f5")
+      .setTitle("Spouštím rádio " + "`" + args + "`")
+      .addFields(
+        {
+          name: "**Vyžádal**",
+          value: `${message.author}`,
+          inline: true,
+        },
+        {
+          name: "**Hlasitost**",
+          value: volume * 100 + "%",
+          inline: true,
+        }
+      )
+      .setThumbnail(radio_thumbnails[index])
+  );
+  console.log(
+    "Zapnul jsem rádio " + args + " na žádost " + `${message.author.username}`
+  );
+}
+
+//radio
+bot.on("message", (message) => {
+  const ytdl = require("ytdl-core");
+  if (message.content.toLowerCase().startsWith("-radio")) {
+    let args = message.content.split(" ");
+
+    radioSelection(message, args[1]);
   }
 });
 
 bot.on("message", (msg) => {
-  if (msg.content == "-help") {
+  if (msg.content == "-ohelp") {
     msg.delete({ timeout: 100 });
     msg.channel.send(
       new Discord.MessageEmbed()
@@ -326,7 +192,7 @@ bot.on("message", (msg) => {
 bot.on("message", async (message) => {
   if (!message.guild) return;
 
-  if (message.content == "-join") {
+  if (message.content == "-ojoin") {
     if (message.member.voice.channel) {
       const connection = await message.member.voice.channel.join();
       connection.voice.setSelfDeaf(true);
@@ -355,7 +221,7 @@ bot.on("message", async (message) => {
 bot.on("message", async (message) => {
   if (!message.guild) return;
 
-  if (message.content == "-leave") {
+  if (message.content == "-oleave") {
     if (message.member.voice.channel) {
       const disconnect = await message.member.voice.channel.leave();
       message.delete({ timeout: 1000 });
@@ -383,19 +249,33 @@ bot.on("message", async (message) => {
 
 const ytdl = require("ytdl-core");
 const queue = new Map();
+let inChannelPlay = 0;
 
 bot.on("message", async (message) => {
   if (message.author.bot) return;
 
   const serverQueue = queue.get(message.guild.id);
 
-  if (message.content.startsWith(`-play`)) {
+  if (message.content.startsWith(`-oplay`)) {
     execute(message, serverQueue);
+    if (inChannelPlay == 0) {
+      inChannelPlay = 1;
+      message.channel.send(
+        new Discord.MessageEmbed()
+          .setTitle(
+            "Připojuji se ke kanálu " +
+              "`" +
+              message.member.voice.channel.name +
+              "`"
+          )
+          .setColor("#4287f5")
+      );
+    }
     return;
-  } else if (message.content.startsWith(`-skip`)) {
+  } else if (message.content.startsWith(`-oskip`)) {
     skip(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`-stop`)) {
+  } else if (message.content.startsWith(`-ostop`)) {
     stop(message, serverQueue);
     return;
   }
@@ -423,9 +303,10 @@ bot.on("message", async (message) => {
     const song = {
       title: songInfo.videoDetails.title,
       url: songInfo.videoDetails.video_url,
-      author: songInfo.videoDetails.author,
-      thumbnail: songInfo.videoDetails.thumbnails.thumbnail_url,
+      author: songInfo.videoDetails.author.name,
+      thumbnail: songInfo.videoDetails.thumbnails,
       length: songInfo.videoDetails.lengthSeconds,
+      videoId: songInfo.videoDetails.videoId,
     };
 
     if (!serverQueue) {
@@ -470,7 +351,7 @@ bot.on("message", async (message) => {
           .setColor("#c90000")
       );
 
-    if (!serverQueue) return serverQueue.connection.dispatcher.end();
+    if (serverQueue) return serverQueue.connection.dispatcher.end();
 
     message.channel.send(
       new Discord.MessageEmbed()
@@ -509,6 +390,7 @@ bot.on("message", async (message) => {
 
     if (!song) {
       serverQueue.voiceChannel.leave();
+      inChannelPlay = 0;
       message.channel.send(
         new Discord.MessageEmbed()
           .setTitle(
@@ -520,6 +402,7 @@ bot.on("message", async (message) => {
           .setColor("#4287f5")
       );
       queue.delete(guild.id);
+
       return;
     }
 
@@ -561,22 +444,12 @@ bot.on("message", async (message) => {
       .on("error", (error) => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 1);
     console.log("Zapinam hudbu...");
-    message.channel.send(
-      new Discord.MessageEmbed()
-        .setTitle(
-          "Připojuji se ke kanálu " +
-            "`" +
-            message.member.voice.channel.name +
-            "`"
-        )
-        .setColor("#4287f5")
-    );
     serverQueue.textChannel.send(
       new Discord.MessageEmbed()
         .setTitle(`**${song.title}**`)
         .setURL(`${song.url}`)
         .setThumbnail(
-          "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c545.png"
+          "https://i.ytimg.com/vi/" + `${song.videoId}` + "/default.jpg"
         )
         .setColor("#4287f5")
         .setAuthor("Přehrávám: ")
@@ -591,7 +464,7 @@ bot.on("message", async (message) => {
 
 //mazání zpráv
 bot.on("message", (message) => {
-  let prefix = "-delete";
+  let prefix = "-odelete";
   let msg = message.content.toLowerCase();
   let sender = message.author;
   let cont = message.content.slice(prefix.length).split(" ");
